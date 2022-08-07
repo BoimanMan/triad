@@ -2,15 +2,15 @@
 
 importer="texture"
 type="StreamTexture"
-path="res://.import/sLeader.png-8640ea08e9c415e5de1b6f3d1809eb99.stex"
+path="res://.import/spawnGrunt.png-45e4ebc391b6f45cd3840fc025edcac4.stex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Sprites/sLeader.png"
-dest_files=[ "res://.import/sLeader.png-8640ea08e9c415e5de1b6f3d1809eb99.stex" ]
+source_file="res://Sprites/spawnGrunt.png"
+dest_files=[ "res://.import/spawnGrunt.png-45e4ebc391b6f45cd3840fc025edcac4.stex" ]
 
 [params]
 
