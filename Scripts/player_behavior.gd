@@ -46,7 +46,7 @@ func _physics_process(delta):
 	#velocity = input_vector * speed
 	move_and_slide(velocity)
 	#If left mouse click, start attack animation.
-	if Input.is_action_just_pressed("prim_attack"):
+	if Input.is_action_just_pressed("prim_attack") and !attack_player.is_playing():
 		var mouse_pos = get_global_mouse_position()
 		prim_attack()
 	
