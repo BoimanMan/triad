@@ -18,3 +18,9 @@ func _ready():
 func _physics_process(delta):
 	velocity = position.direction_to(player.position) * speed
 	move_and_slide(velocity)
+
+
+
+func _on_Hurtbox_body_entered(body):
+	if body.name == "Attack":
+		 queue_free()

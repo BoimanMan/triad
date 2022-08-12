@@ -7,8 +7,8 @@ extends KinematicBody2D
 var velocity = Vector2.ZERO
 export var speed = 250
 export var friction = 0.5
-onready var attack_player = $StaticBody2D/AnimationPlayer
-onready var attack_body = $StaticBody2D
+onready var attack_player = $Attack/AnimationPlayer
+onready var attack_body = $Attack
 var mouse_pos
 var dir
 # Called when the node enters the scene tree for the first time.
