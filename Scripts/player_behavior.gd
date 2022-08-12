@@ -21,7 +21,7 @@ func _ready():
 #Attack function
 func prim_attack():
 	#Set the frame to zero on start to avoid conflicts
-	attack_player.set_frame(0)
+	#attack_player.set_frame(0)
 	#Play the animation from frame 0.
 	attack_player.play("attack")
 func _physics_process(delta):
