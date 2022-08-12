@@ -8,7 +8,9 @@ var velocity = Vector2.ZERO
 export var speed = 250
 export var friction = 0.5
 onready var attack_player = $StaticBody2D/AnimationPlayer
-
+onready var attack_body = $StaticBody2D
+var mouse_pos
+var dir
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	pass # Replace with function body.
@@ -23,6 +25,9 @@ func prim_attack():
 	#Set the frame to zero on start to avoid conflicts
 	#attack_player.set_frame(0)
 	#Play the animation from frame 0.
+	mouse_pos = get_global_mouse_position()
+	attack_body.look_at(mouse_pos)
+	attack_body.rotate(-PI/2)
 	attack_player.play("attack")
 func _physics_process(delta):
 	#If the animation is playing and it finished the cycle, stop it.
@@ -42,6 +47,7 @@ func _physics_process(delta):
 	move_and_slide(velocity)
 	#If left mouse click, start attack animation.
 	if Input.is_action_just_pressed("prim_attack"):
+		var mouse_pos = get_global_mouse_position()
 		prim_attack()
 	
 	
