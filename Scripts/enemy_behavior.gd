@@ -2,6 +2,8 @@ extends KinematicBody2D
 var speed = 150
 var velocity
 onready var player = $"../Player"
+onready var world = get_node("/root/Main")
+signal enemy_kill
 # Declare member variables here. Examples:
 # var a = 2
 # var b = "text"
@@ -9,7 +11,7 @@ onready var player = $"../Player"
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
-	pass # Replace with function body.
+	self.connect("enemy_kill", world, "_on_Enemy_enemy_kill")
 
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
@@ -23,4 +25,6 @@ func _physics_process(delta):
 
 func _on_Hurtbox_body_entered(body):
 	if body.name == "Attack":
-		 queue_free()
+		emit_signal("enemy_kill")
+		queue_free()
+		
