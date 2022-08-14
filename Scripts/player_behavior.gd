@@ -29,6 +29,7 @@ func prim_attack():
 	attack_body.look_at(mouse_pos)
 	attack_body.rotate(-PI/2)
 	attack_player.play("attack")
+	
 func _physics_process(delta):
 	#If the animation is playing and it finished the cycle, stop it.
 	#if attack_player.get_frame() == 3 and attack_player.is_playing():

@@ -10,7 +10,6 @@ var enemy_limit
 var wave
 onready var enemy_timer = $EnemyTimer
 onready var wave_timer = $WaveTimer
-
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	enemy_count = 0
