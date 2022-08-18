@@ -1,10 +1,14 @@
 extends KinematicBody2D
 var speed = 150
 var velocity
+var damage_prob
+var damage
+var hp
 onready var player = get_node("/root/Main/Player")
 onready var world = get_node("/root/Main")
+onready var game_ui = get_node("/root/Main/InGameUI")
 signal enemy_kill
-signal enemy_damage_player
+signal enemy_damage_player(damage)
 # Declare member variables here. Examples:
 # var a = 2
 # var b = "text"
@@ -14,7 +18,6 @@ signal enemy_damage_player
 func _ready():
 	self.connect("enemy_kill", world, "_on_Enemy_enemy_kill")
 	self.connect("enemy_damage_player", player, "_on_Enemy_enemy_damage_player", [self])
-
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 #func _process(delta):
@@ -32,4 +35,11 @@ func _on_Hurtbox_body_entered(body):
 		
 func _on_Hitbox_body_entered(body):
 	if body.is_in_group("Players"):
-		emit_signal("enemy_damage_player")
+		damage_prob = randi() % 101
+		if damage_prob > 0 and damage_prob < 21:
+			damage = 9
+		elif damage_prob > 20 and damage_prob < 81:
+			damage = 10
+		else:
+			damage = 11
+		emit_signal("enemy_damage_player", damage)

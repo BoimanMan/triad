@@ -9,15 +9,18 @@ export var speed = 250
 export var friction = 0.5
 onready var attack_player = $Attack/AnimationPlayer
 onready var attack_body = $Attack
+onready var game_ui = get_node("/root/Main/Camera2D/InGameUI")
+signal player_hp_change(new_hp)
 var mouse_pos
 var knockback_vector
 var dir
 var hp
 var kb_force = 500
 var being_knocked_back = false
-signal player_hp_change
+
 # Called when the node enters the scene tree for the first time.
 func _ready():
+	self.connect("player_hp_change", game_ui, "_on_Player_player_hp_change")
 	hp = 100
 	print(hp)
 
@@ -35,13 +38,17 @@ func prim_attack():
 	attack_body.rotate(-PI/2)
 	attack_player.play("attack")
 	
-func _on_Enemy_enemy_damage_player(source):
+func _on_Enemy_enemy_damage_player(damage, source):
 	if !being_knocked_back:
+		hp -= damage
+		emit_signal("player_hp_change", hp)
+		print(hp)
 		velocity = Vector2.ZERO
 		$KnockbackTimer.start(0.5)
 		$FlashTimer.start(0.15)
 		being_knocked_back = true
 		knockback_vector = (self.position - source.position).normalized()
+		
 		#velocity = lerp(knockback_vector * kb_force, Vector2.ZERO, friction)
 		#print("kb: " + str(self.position) + " " + str(source.position) + " " + str(knockback_vector * kb_force))
 	

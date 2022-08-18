@@ -18,6 +18,11 @@ onready var max_health = 100
 func _ready():
 	hp_bar.value = max_health # Replace with function body.
 	hp_bar_text.text = str(hp_bar.value)
+func _on_Player_player_hp_change(new_hp):
+	hp_bar.value = new_hp
+	hp_bar_text.text = str(hp_bar.value)
+	print(hp_bar.value)
+	pass
 func _physics_process(delta):
 	if hp_bar.value > max_health * 0.5:
 		hp_bar.texture_progress = hp_bar_green
