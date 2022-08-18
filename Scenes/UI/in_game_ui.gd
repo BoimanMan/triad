@@ -16,7 +16,7 @@ onready var max_health = 100
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
-	hp_bar.value = max_health * 0.4 # Replace with function body.
+	hp_bar.value = max_health # Replace with function body.
 	hp_bar_text.text = str(hp_bar.value)
 func _physics_process(delta):
 	if hp_bar.value > max_health * 0.5:

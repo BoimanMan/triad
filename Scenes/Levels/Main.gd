@@ -42,7 +42,6 @@ func _on_Enemy_enemy_kill():
 	enemy_count -= 1
 	print(enemy_count)
 
-
 func _on_WaveTimer_timeout():
 	print("Wave " + str(wave) + " has begun. Defeat " + str(enemy_limit) + " enemies.")
 	enemy_timer.start(3)
