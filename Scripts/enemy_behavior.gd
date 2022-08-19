@@ -4,9 +4,9 @@ var velocity
 var damage_prob
 var damage
 var hp
+var player_alive = true
 onready var player = get_node("/root/Main/Player")
 onready var world = get_node("/root/Main")
-onready var game_ui = get_node("/root/Main/InGameUI")
 signal enemy_kill
 signal enemy_damage_player(damage)
 # Declare member variables here. Examples:
@@ -23,10 +23,14 @@ func _ready():
 #func _process(delta):
 #	pass
 func _physics_process(delta):
-	velocity = position.direction_to(player.position) * speed
+	if player_alive:
+		velocity = position.direction_to(player.position) * speed
+	else:
+		velocity = Vector2.ZERO
 	move_and_slide(velocity)
 
-
+func _on_Player_player_death():
+	player_alive = false
 
 func _on_Hurtbox_body_entered(body):
 	if body.name == "Attack":

@@ -12,6 +12,7 @@ onready var enemy_timer = $EnemyTimer
 onready var wave_timer = $WaveTimer
 # Called when the node enters the scene tree for the first time.
 func _ready():
+	randomize()
 	enemy_count = 0
 	enemies_this_wave = 0
 	enemy_limit = 3
@@ -33,7 +34,7 @@ func _physics_process(delta):
 #	pass
 
 
-func _on_EnemySpawner_enemy_spawned():
+func _on_EnemySpawner_enemy_spawned(enemy_instance):
 	enemy_count += 1
 	enemies_this_wave += 1
 	print(enemy_count)

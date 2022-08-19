@@ -155,5 +155,9 @@ one_shot = true
 [node name="FlashTimer" type="Timer" parent="."]
 wait_time = 0.1
 
+[node name="DeathAnimTimer" type="Timer" parent="."]
+one_shot = true
+
 [connection signal="timeout" from="KnockbackTimer" to="." method="_on_KnockbackTimer_timeout"]
 [connection signal="timeout" from="FlashTimer" to="." method="_on_FlashTimer_timeout"]
+[connection signal="timeout" from="DeathAnimTimer" to="." method="_on_DeathAnimTimer_timeout"]
