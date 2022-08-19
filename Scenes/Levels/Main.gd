@@ -8,6 +8,7 @@ var enemy_count
 var enemies_this_wave
 var enemy_limit
 var wave
+var current_time
 onready var enemy_timer = $EnemyTimer
 onready var wave_timer = $WaveTimer
 # Called when the node enters the scene tree for the first time.
@@ -18,8 +19,10 @@ func _ready():
 	enemy_limit = 3
 	wave = 1
 func _physics_process(delta):
-	if wave_timer.time_left is int:
-		print("Wave Timer: " + str(wave_timer.time_left))
+	if ceil(wave_timer.time_left) != current_time:
+		current_time = ceil(wave_timer.time_left)
+		if current_time > 0:
+			print("Wave Timer: " + str(current_time))
 	#if enemy_count <= 0 and enemy_timer.is_stopped():
 		#enemy_timer.start(3)
 	if enemies_this_wave >= enemy_limit:
@@ -37,11 +40,15 @@ func _physics_process(delta):
 func _on_EnemySpawner_enemy_spawned(enemy_instance):
 	enemy_count += 1
 	enemies_this_wave += 1
-	print(enemy_count)
 
 func _on_Enemy_enemy_kill():
 	enemy_count -= 1
-	print(enemy_count)
+	if enemy_count > 1:
+		print(str(enemy_count) + " enemies remain.")
+	elif enemy_count == 0:
+		print("Wave complete!")
+	else:
+		print(str(enemy_count) + " enemy remains.")
 
 func _on_WaveTimer_timeout():
 	print("Wave " + str(wave) + " has begun. Defeat " + str(enemy_limit) + " enemies.")

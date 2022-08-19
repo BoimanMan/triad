@@ -12,16 +12,16 @@ var hp_letter_yellow = preload("res://Sprites/hp_yellow_letters.png")
 var hp_letter_red = preload("res://Sprites/hp_red_letters.png")
 onready var hp_bar = $MarginContainer/VBoxContainer/BottomUI/VBoxContainer/HPBar
 onready var hp_bar_text = $MarginContainer/VBoxContainer/BottomUI/VBoxContainer/HPBar/Label
-onready var max_health = 100
+onready var max_health = 100.0
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	hp_bar.value = max_health # Replace with function body.
-	hp_bar_text.text = str(hp_bar.value)
+	hp_bar_text.text = str(max_health)
 func _on_Player_player_hp_change(new_hp):
-	hp_bar.value = new_hp
-	hp_bar_text.text = str(hp_bar.value)
-	print(hp_bar.value)
+	#Do this operation to support hp values higher than 100.
+	hp_bar.value = (int(round((new_hp/max_health) * 100)))
+	hp_bar_text.text = str(new_hp)
 	pass
 func _physics_process(delta):
 	if hp_bar.value > max_health * 0.5:

@@ -19,6 +19,7 @@ var mouse_pos
 var knockback_vector
 var dir
 var hp
+var atk_dam
 var kb_force = 500
 var being_knocked_back = false
 var death_effect_scene = preload("res://Scenes/Systems/DeathEffect.tscn")
@@ -28,7 +29,6 @@ var dead = false
 func _ready():
 	self.connect("player_hp_change", game_ui, "_on_Player_player_hp_change")
 	hp = 100
-	print(hp)
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 #func _process(delta):
@@ -39,6 +39,13 @@ func prim_attack():
 	#Set the frame to zero on start to avoid conflicts
 	#attack_player.set_frame(0)
 	#Play the animation from frame 0.
+	var damage_prob = randi() % 101
+	if damage_prob > 0 and damage_prob < 21:
+		atk_dam = 9
+	elif damage_prob > 20 and damage_prob < 81:
+		atk_dam = 10
+	else:
+		atk_dam = 11
 	mouse_pos = get_global_mouse_position()
 	attack_body.look_at(mouse_pos)
 	attack_body.rotate(-PI/2)
@@ -47,8 +54,9 @@ func prim_attack():
 func _on_Enemy_enemy_damage_player(damage, source):
 	if !being_knocked_back and !dead:
 		hp -= damage
+		if hp < 0:
+			hp = 0
 		emit_signal("player_hp_change", hp)
-		print(hp)
 	#Take the hit, knockback and invuln (TBD)
 		if hp > 0:
 			velocity = Vector2.ZERO

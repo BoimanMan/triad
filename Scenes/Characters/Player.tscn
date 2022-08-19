@@ -5,8 +5,8 @@
 [ext_resource path="res://Scripts/player_behavior.gd" type="Script" id=3]
 
 [sub_resource type="CapsuleShape2D" id=1]
-radius = 14.0
-height = 8.0
+radius = 12.0
+height = 4.0
 
 [sub_resource type="RectangleShape2D" id=4]
 extents = Vector2( 49, 20 )
