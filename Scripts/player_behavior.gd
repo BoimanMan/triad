@@ -24,10 +24,13 @@ var kb_force = 500
 var being_knocked_back = false
 var death_effect_scene = preload("res://Scenes/Systems/DeathEffect.tscn")
 var player_death_sprite = preload("res://Sprites/sLeaderDeath.png")
+onready var spawner_array = get_tree().get_nodes_in_group("Spawners")
 var dead = false
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	self.connect("player_hp_change", game_ui, "_on_Player_player_hp_change")
+	for n in spawner_array:
+		self.connect("player_death", n, "_on_Player_player_death")
 	hp = 100
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.

@@ -19,14 +19,15 @@ func _ready():
 	enemy_limit = 3
 	wave = 1
 func _physics_process(delta):
+#Countdown to wave start
 	if ceil(wave_timer.time_left) != current_time:
 		current_time = ceil(wave_timer.time_left)
 		if current_time > 0:
 			print("Wave Timer: " + str(current_time))
-	#if enemy_count <= 0 and enemy_timer.is_stopped():
-		#enemy_timer.start(3)
+#Stop spawning when limit is hit
 	if enemies_this_wave >= enemy_limit:
 		enemy_timer.stop()
+#If no enemies and no more spawning, wave is complete
 		if enemy_count <= 0 and wave_timer.is_stopped():
 			wave += 1
 			enemy_limit += 3
