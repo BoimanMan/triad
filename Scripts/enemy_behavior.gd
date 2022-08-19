@@ -22,6 +22,7 @@ signal enemy_damage_player(damage)
 func _ready():
 	self.connect("enemy_kill", world, "_on_Enemy_enemy_kill")
 	self.connect("enemy_damage_player", player, "_on_Enemy_enemy_damage_player", [self])
+	self.connect("enemy_damage_player", world, "_on_Enemy_enemy_damage_player")
 	max_hp = 20
 	hp = max_hp
 # Called every frame. 'delta' is the elapsed time since the previous frame.

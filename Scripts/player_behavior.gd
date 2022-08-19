@@ -10,6 +10,7 @@ onready var attack_body = $Attack
 onready var game_ui = get_node("/root/Main/Camera2D/InGameUI")
 onready var camera = get_node("../Camera2D")
 onready var world = get_node("/root/Main")
+onready var spawner_array = get_tree().get_nodes_in_group("Spawners")
 signal player_hp_change(new_hp)
 signal player_death
 var velocity = Vector2.ZERO
@@ -24,8 +25,8 @@ var kb_force = 500
 var being_knocked_back = false
 var death_effect_scene = preload("res://Scenes/Systems/DeathEffect.tscn")
 var player_death_sprite = preload("res://Sprites/sLeaderDeath.png")
-onready var spawner_array = get_tree().get_nodes_in_group("Spawners")
 var dead = false
+
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	self.connect("player_hp_change", game_ui, "_on_Player_player_hp_change")
