@@ -67,6 +67,7 @@ func _on_Enemy_enemy_damage_player(damage, source):
 			$KnockbackTimer.start(0.5)
 			$FlashTimer.start(0.15)
 			being_knocked_back = true
+			$CollisionShape2D.set_deferred("disabled", true)
 			knockback_vector = (self.position - source.position).normalized()
 	#Death Logic
 		else:
@@ -111,7 +112,7 @@ func _on_KnockbackTimer_timeout():
 	being_knocked_back = false 
 	$FlashTimer.stop()
 	$Sprite.show()
-
+	$CollisionShape2D.set_deferred("disabled", false)
 #Create sprite blinking effect
 func _on_FlashTimer_timeout():
 	if $Sprite.is_visible():

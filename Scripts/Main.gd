@@ -38,13 +38,29 @@ func _physics_process(delta):
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 #func _process(delta):
 #	pass
-func _on_Enemy_enemy_damage_player(damage):
+#creates instance for damage number
+func dmg_num_instantiate(damage, color):
 	var dmg_num = damage_number_scene.instance()
 	var lbl = dmg_num.get_node("Label")
 	lbl.text = "-" + str(damage)
-	lbl.add_color_override("font_color", Color.red)
-	player.add_child(dmg_num)
+	lbl.add_color_override("font_color", color)
+	return dmg_num
 	
+func _on_Enemy_enemy_damage_player(damage):
+	#var dmg_num = damage_number_scene.instance()
+	#var lbl = dmg_num.get_node("Label")
+	#lbl.text = "-" + str(damage)
+	#lbl.add_color_override("font_color", Color.red)
+	if !player.being_knocked_back:
+		var dmg_num = dmg_num_instantiate(damage, Color.purple)
+		dmg_num.position = player.position
+		self.add_child(dmg_num)
+	
+func _on_Enemy_enemy_hit(damage, source):
+	if !source.being_knocked_back:
+		var dmg_num = dmg_num_instantiate(damage, Color.red)
+		dmg_num.position = source.position
+		self.add_child(dmg_num)
 
 func _on_EnemySpawner_enemy_spawned(enemy_instance):
 	enemy_count += 1

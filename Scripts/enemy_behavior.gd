@@ -12,6 +12,7 @@ const KB_FORCE = 500
 onready var player = get_node("/root/Main/Player")
 onready var world = get_node("/root/Main")
 signal enemy_kill
+signal enemy_hit(damage)
 signal enemy_damage_player(damage)
 # Declare member variables here. Examples:
 # var a = 2
@@ -21,6 +22,7 @@ signal enemy_damage_player(damage)
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	self.connect("enemy_kill", world, "_on_Enemy_enemy_kill")
+	self.connect("enemy_hit", world, "_on_Enemy_enemy_hit", [self])
 	self.connect("enemy_damage_player", player, "_on_Enemy_enemy_damage_player", [self])
 	self.connect("enemy_damage_player", world, "_on_Enemy_enemy_damage_player")
 	max_hp = 20
@@ -43,10 +45,13 @@ func _on_Player_player_death():
 func _on_Hurtbox_body_entered(body):
 	if body.name == "Attack":
 		hp -= player.atk_dam
+		emit_signal("enemy_hit", player.atk_dam)
 		if hp > 0:
 			velocity = Vector2.ZERO
 			$KnockbackTimer.start(0.5)
 			$FlashTimer.start(0.15)
+			$Hurtbox/CollisionShape2D.set_deferred("disabled", true)
+			$CollisionShape2D.set_deferred("disabled", true)
 			being_knocked_back = true
 			knockback_vector = (self.position - player.position).normalized()
 		if hp <= 0:
@@ -69,6 +74,8 @@ func _on_KnockbackTimer_timeout():
 	being_knocked_back = false
 	$FlashTimer.stop()
 	$Sprite.show()
+	$Hurtbox/CollisionShape2D.set_deferred("disabled", false)
+	$CollisionShape2D.set_deferred("disabled", false)
 
 func _on_FlashTimer_timeout():
 	if $Sprite.is_visible():
