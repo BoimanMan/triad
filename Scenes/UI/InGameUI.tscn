@@ -31,16 +31,34 @@ margin_bottom = 592.0
 margin_right = 984.0
 margin_bottom = 180.0
 rect_min_size = Vector2( 984, 180 )
+custom_constants/separation = 12
 alignment = 2
 
+[node name="Popup2" type="Popup" parent="MarginContainer/VBoxContainer/TopUI"]
+visible = true
+margin_right = 242.0
+margin_bottom = 180.0
+rect_min_size = Vector2( 242, 0 )
+
+[node name="Popup" type="Popup" parent="MarginContainer/VBoxContainer/TopUI"]
+visible = true
+margin_left = 254.0
+margin_right = 730.0
+margin_bottom = 180.0
+rect_min_size = Vector2( 476, 0 )
+size_flags_horizontal = 4
+popup_exclusive = true
+
 [node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer/VBoxContainer/TopUI"]
-margin_left = 844.0
+margin_left = 742.0
 margin_right = 984.0
 margin_bottom = 180.0
-rect_min_size = Vector2( 128, 0 )
+rect_min_size = Vector2( 242, 0 )
+size_flags_horizontal = 8
 
 [node name="NinePatchRect" type="NinePatchRect" parent="MarginContainer/VBoxContainer/TopUI/VBoxContainer"]
-margin_right = 140.0
+margin_left = 102.0
+margin_right = 242.0
 margin_bottom = 140.0
 rect_min_size = Vector2( 140, 140 )
 size_flags_horizontal = 8

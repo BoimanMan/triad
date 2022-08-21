@@ -68,6 +68,7 @@ func difficulty_change():
 			$DifficultyTimer.stop()
 	if difficulty != "Easy":
 		print("Your enemies grow more aggressive. The difficulty has been increased to " + difficulty + ".")
+
 #creates instance for damage number
 func dmg_num_instantiate(damage, color):
 	var dmg_num = damage_number_scene.instance()
