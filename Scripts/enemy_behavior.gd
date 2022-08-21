@@ -76,7 +76,7 @@ func _on_Hurtbox_body_entered(body):
 		
 func _on_Hitbox_body_entered(body):
 	#var base_damage = damage
-	if body.is_in_group("Players"):
+	if body.is_in_group("Players") and !being_knocked_back:
 		#damage_prob = randi() % 101
 		#if damage_prob > 0 and damage_prob < 21:
 			#damage *= 0.9

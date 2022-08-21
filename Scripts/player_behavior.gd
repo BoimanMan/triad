@@ -146,5 +146,6 @@ func _on_DeathAnimTimer_timeout():
 				dir = (Vector2.LEFT + Vector2.UP) * 2
 		death_effect.velocity = dir
 		world.add_child(death_effect)
-		print("Game Over.")
+	print("Game Over.")
+	get_parent().get_node("DifficultyTimer").stop()
 	queue_free()
