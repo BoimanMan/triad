@@ -17,7 +17,8 @@ var damage_number_scene = preload("res://Scenes/Systems/DamageNumber.tscn")
 onready var enemy_timer = $EnemyTimer
 onready var wave_timer = $WaveTimer
 onready var player = $Player
-
+onready var ui_center_popup = $Camera2D/InGameUI/MarginContainer/VBoxContainer/TopUI/CenterPopup
+onready var center_popup_text = $Camera2D/InGameUI/MarginContainer/VBoxContainer/TopUI/CenterPopup/Label
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	randomize()
@@ -29,6 +30,7 @@ func _ready():
 	wave_enemy_limit = 3
 	screen_enemy_limit = 1
 	wave = 1
+	ui_center_popup.popup()
 func _physics_process(delta):
 	
 #Countdown to wave start
@@ -36,6 +38,8 @@ func _physics_process(delta):
 		current_time = ceil(wave_timer.time_left)
 		if current_time > 0:
 			print("Wave Timer: " + str(current_time))
+			center_popup_text.text = "Wave " + str(wave) + " starts in...\n" + str(current_time)
+			
 			
 #Stop spawning when limit is hit
 	if enemies_this_wave >= wave_enemy_limit:
@@ -94,6 +98,8 @@ func _on_Enemy_enemy_hit(damage, source):
 #Signal: When spawner spawns an enemy, increase enemy count and count of enemies
 #that have spawned this wave.
 func _on_EnemySpawner_enemy_spawned(enemy_instance):
+	if ui_center_popup.is_visible():
+		ui_center_popup.hide()
 	enemy_count += 1
 	enemies_this_wave += 1
 
@@ -105,12 +111,14 @@ func _on_Enemy_enemy_kill():
 		print(str(wave_enemy_limit - enemies_defeated) + " enemies remain.")
 	elif wave_enemy_limit - enemies_defeated <= 0 and enemy_count == 0:
 		print("Wave complete!")
+		ui_center_popup.popup()
 	else:
 		print("1 enemy remains.")
 
 #Signal: When WaveTimer times out, new wave begins, start enemy timer.
 func _on_WaveTimer_timeout():
 	print("Wave " + str(wave) + " has begun. Defeat " + str(wave_enemy_limit) + " enemies.")
+	center_popup_text.text = "Wave " + str(wave) + " has begun."
 	if spawn_interval >= 1 and wave != 1:
 		spawn_interval *= 0.99
 	print(str(spawn_interval))

@@ -1,4 +1,4 @@
-[gd_scene load_steps=10 format=2]
+[gd_scene load_steps=12 format=2]
 
 [ext_resource path="res://Sprites/hp_green_letters.png" type="Texture" id=1]
 [ext_resource path="res://Sprites/hpUI.png" type="Texture" id=2]
@@ -9,6 +9,16 @@
 [ext_resource path="res://Sprites/base_skill_misaki_ult.png" type="Texture" id=7]
 [ext_resource path="res://Sprites/base_skill_misaki_wave.png" type="Texture" id=8]
 [ext_resource path="res://Sprites/base_skill_misaki_slash.png" type="Texture" id=9]
+[ext_resource path="res://fonts/poco/Poco.ttf" type="DynamicFontData" id=10]
+
+[sub_resource type="DynamicFont" id=1]
+size = 20
+outline_size = 2
+outline_color = Color( 0, 0, 0, 1 )
+use_mipmaps = true
+extra_spacing_top = -18
+extra_spacing_bottom = 6
+font_data = ExtResource( 10 )
 
 [node name="InGameUI" type="CanvasLayer"]
 script = ExtResource( 4 )
@@ -34,13 +44,13 @@ rect_min_size = Vector2( 984, 180 )
 custom_constants/separation = 12
 alignment = 2
 
-[node name="Popup2" type="Popup" parent="MarginContainer/VBoxContainer/TopUI"]
+[node name="TopLeftPopup" type="Popup" parent="MarginContainer/VBoxContainer/TopUI"]
 visible = true
 margin_right = 242.0
 margin_bottom = 180.0
 rect_min_size = Vector2( 242, 0 )
 
-[node name="Popup" type="Popup" parent="MarginContainer/VBoxContainer/TopUI"]
+[node name="CenterPopup" type="Popup" parent="MarginContainer/VBoxContainer/TopUI"]
 visible = true
 margin_left = 254.0
 margin_right = 730.0
@@ -48,6 +58,16 @@ margin_bottom = 180.0
 rect_min_size = Vector2( 476, 0 )
 size_flags_horizontal = 4
 popup_exclusive = true
+
+[node name="Label" type="Label" parent="MarginContainer/VBoxContainer/TopUI/CenterPopup"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = 34.0
+custom_fonts/font = SubResource( 1 )
+text = "test
+"
+align = 1
+valign = 1
 
 [node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer/VBoxContainer/TopUI"]
 margin_left = 742.0
