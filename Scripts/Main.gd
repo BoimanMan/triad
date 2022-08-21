@@ -13,6 +13,9 @@ var current_time
 var second_of_diff_change
 var damage_number_scene = preload("res://Scenes/Systems/DamageNumber.tscn")
 
+#Signals
+signal difficulty_changed
+
 #Onready variables
 onready var enemy_timer = $EnemyTimer
 onready var wave_timer = $WaveTimer
@@ -98,6 +101,7 @@ func _on_Enemy_enemy_hit(damage, source):
 #Signal: When spawner spawns an enemy, increase enemy count and count of enemies
 #that have spawned this wave.
 func _on_EnemySpawner_enemy_spawned(enemy_instance):
+	#self.connect("difficulty_changed", enemy_instance, "_on_Main_difficulty_changed")
 	if ui_center_popup.is_visible():
 		ui_center_popup.hide()
 	enemy_count += 1

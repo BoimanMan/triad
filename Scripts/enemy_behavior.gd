@@ -26,6 +26,22 @@ func _ready():
 	self.connect("enemy_damage_player", player, "_on_Enemy_enemy_damage_player", [self])
 	self.connect("enemy_damage_player", world, "_on_Enemy_enemy_damage_player")
 	max_hp = 20
+	damage = 10
+	match world.difficulty:
+		"Easy":
+			pass
+		"Normal":
+			max_hp = int(round(max_hp * 1.5))
+			damage = int(round(damage * 1.5))
+		"Hard":
+			max_hp *= 2
+			damage *= 2
+		"Brutal":
+			max_hp *= 3
+			damage = int(round(damage * 2.5))
+		"Insane":
+			max_hp *= 5
+			damage *= 3
 	hp = max_hp
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 #func _process(delta):
@@ -59,16 +75,17 @@ func _on_Hurtbox_body_entered(body):
 			queue_free()
 		
 func _on_Hitbox_body_entered(body):
+	#var base_damage = damage
 	if body.is_in_group("Players"):
-		damage_prob = randi() % 101
-		if damage_prob > 0 and damage_prob < 21:
-			damage = 9
-		elif damage_prob > 20 and damage_prob < 81:
-			damage = 10
-		else:
-			damage = 11
-		emit_signal("enemy_damage_player", damage)
-
+		#damage_prob = randi() % 101
+		#if damage_prob > 0 and damage_prob < 21:
+			#damage *= 0.9
+		#elif damage_prob > 20 and damage_prob < 81:
+			#pass
+		#else:
+			#damage *= 1.1
+		emit_signal("enemy_damage_player", int(round(rand_range(0.9 * damage, 1.1 * damage))))
+		#damage = base_damage
 
 func _on_KnockbackTimer_timeout():
 	being_knocked_back = false
