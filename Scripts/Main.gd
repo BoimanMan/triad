@@ -68,7 +68,6 @@ func difficulty_change():
 			$DifficultyTimer.stop()
 	if difficulty != "Easy":
 		print("Your enemies grow more aggressive. The difficulty has been increased to " + difficulty + ".")
-		print("New spawn interval: " + str(spawn_interval))
 #creates instance for damage number
 func dmg_num_instantiate(damage, color):
 	var dmg_num = damage_number_scene.instance()
@@ -111,6 +110,9 @@ func _on_Enemy_enemy_kill():
 #Signal: When WaveTimer times out, new wave begins, start enemy timer.
 func _on_WaveTimer_timeout():
 	print("Wave " + str(wave) + " has begun. Defeat " + str(wave_enemy_limit) + " enemies.")
+	if spawn_interval >= 1 and wave != 1:
+		spawn_interval *= 0.99
+	print(str(spawn_interval))
 	enemy_timer.start(spawn_interval)
 
 #Signal: When DifficultyTimer times out, increase difficulty.
