@@ -11,7 +11,7 @@ onready var game_start_text = $CanvasLayer/TextureRect/MarginContainer/VBoxConta
 	#pass # Replace with function body.
 func _input(event):
 	if event is InputEventKey or event is InputEventMouseButton:
-		get_tree().change_scene("res://Scenes/Levels/Main.tscn")
+		get_tree().change_scene("res://Scenes/UI/MainMenu.tscn")
 
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.

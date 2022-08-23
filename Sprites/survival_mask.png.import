@@ -1,0 +1,15 @@
+[remap]
+
+importer="bitmap"
+type="BitMap"
+path="res://.import/survival_mask.png-402b551f0371a535acdeb8b485614953.res"
+
+[deps]
+
+source_file="res://Sprites/survival_mask.png"
+dest_files=[ "res://.import/survival_mask.png-402b551f0371a535acdeb8b485614953.res" ]
+
+[params]
+
+create_from=0
+threshold=0.5
