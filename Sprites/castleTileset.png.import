@@ -2,15 +2,15 @@
 
 importer="texture"
 type="StreamTexture"
-path="res://.import/castleTileset.png-7f6fd4f16b13f0cb71385b064d5b5eaf.stex"
+path="res://.import/castleTileset.png-8787c01834168efdff605b5c459b69d2.stex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Tilesets/castleTileset.png"
-dest_files=[ "res://.import/castleTileset.png-7f6fd4f16b13f0cb71385b064d5b5eaf.stex" ]
+source_file="res://Sprites/castleTileset.png"
+dest_files=[ "res://.import/castleTileset.png-8787c01834168efdff605b5c459b69d2.stex" ]
 
 [params]
 

@@ -56,6 +56,8 @@ func prim_attack():
 	attack_player.play("attack")
 	
 func _on_Enemy_enemy_damage_player(damage, source):
+	if being_knocked_back:
+		pass
 	if !being_knocked_back and !dead:
 		hp -= damage
 		if hp < 0:
@@ -67,7 +69,7 @@ func _on_Enemy_enemy_damage_player(damage, source):
 			$KnockbackTimer.start(0.5)
 			$FlashTimer.start(0.15)
 			being_knocked_back = true
-			$CollisionShape2D.set_deferred("disabled", true)
+			#$CollisionShape2D.set_deferred("disabled", true)
 			knockback_vector = (self.position - source.position).normalized()
 	#Death Logic
 		else:
