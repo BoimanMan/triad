@@ -34,6 +34,7 @@ func _ready():
 	screen_enemy_limit = 1
 	wave = 1
 	ui_center_popup.popup()
+	self.connect("difficulty_changed", $Camera2D/InGameUI, "_on_Main_difficulty_changed")
 func _physics_process(delta):
 	
 #Countdown to wave start
@@ -73,6 +74,7 @@ func difficulty_change():
 			spawn_interval *= 0.5
 		"Insane":
 			$DifficultyTimer.stop()
+	emit_signal("difficulty_changed", difficulty)
 	if difficulty != "Easy":
 		print("Your enemies grow more aggressive. The difficulty has been increased to " + difficulty + ".")
 

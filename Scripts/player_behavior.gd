@@ -30,6 +30,7 @@ var dead = false
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	self.connect("player_hp_change", game_ui, "_on_Player_player_hp_change")
+	self.connect("player_death", game_ui, "_on_Player_player_death")
 	for n in spawner_array:
 		self.connect("player_death", n, "_on_Player_player_death")
 	hp = 100

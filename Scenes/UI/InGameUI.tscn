@@ -11,6 +11,7 @@
 [ext_resource path="res://Sprites/base_skill_misaki_slash.png" type="Texture" id=9]
 [ext_resource path="res://fonts/poco/Poco.ttf" type="DynamicFontData" id=10]
 [ext_resource path="res://Sprites/time_frame.png" type="Texture" id=11]
+[ext_resource path="res://fonts/uiSmall.tres" type="DynamicFont" id=12]
 
 [sub_resource type="DynamicFont" id=1]
 size = 20
@@ -19,14 +20,6 @@ outline_color = Color( 0, 0, 0, 1 )
 use_mipmaps = true
 extra_spacing_top = -18
 extra_spacing_bottom = 6
-font_data = ExtResource( 10 )
-
-[sub_resource type="DynamicFont" id=2]
-size = 20
-outline_color = Color( 0, 0, 0, 1 )
-use_mipmaps = true
-extra_spacing_top = -18
-extra_spacing_bottom = 2
 font_data = ExtResource( 10 )
 
 [node name="InGameUI" type="CanvasLayer"]
@@ -102,7 +95,7 @@ margin_bottom = 182.0
 size_flags_horizontal = 8
 texture = ExtResource( 11 )
 
-[node name="Label" type="Label" parent="MarginContainer/VBoxContainer/TopUI/VBoxContainer/TextureRect"]
+[node name="TimeDisplay" type="Label" parent="MarginContainer/VBoxContainer/TopUI/VBoxContainer/TextureRect"]
 modulate = Color( 0, 0, 0, 1 )
 anchor_left = 0.567
 anchor_top = 0.284
@@ -112,9 +105,24 @@ margin_left = -30.0
 margin_top = -7.0
 margin_right = 30.0
 margin_bottom = 7.0
-custom_fonts/font = SubResource( 2 )
+custom_fonts/font = ExtResource( 12 )
 text = "00:00:00"
 align = 2
+valign = 2
+
+[node name="DiffDisplay" type="Label" parent="MarginContainer/VBoxContainer/TopUI/VBoxContainer/TextureRect"]
+modulate = Color( 0, 0, 0, 1 )
+anchor_left = 0.365
+anchor_top = 0.743
+anchor_right = 0.636
+anchor_bottom = 0.743
+margin_left = -20.0
+margin_top = -7.0
+margin_right = 20.0
+margin_bottom = 7.0
+custom_fonts/font = ExtResource( 12 )
+text = "Easy"
+align = 1
 valign = 2
 
 [node name="GameView" type="Control" parent="MarginContainer/VBoxContainer"]
