@@ -2,15 +2,15 @@
 
 importer="texture"
 type="StreamTexture"
-path="res://.import/base_skill_misaki_ult.png-241f0daf923375854852ebbb1e877344.stex"
+path="res://.import/burn_blast.png-35c34739b84e65174c4c4b4292bfb1c7.stex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Sprites/base_skill_misaki_ult.png"
-dest_files=[ "res://.import/base_skill_misaki_ult.png-241f0daf923375854852ebbb1e877344.stex" ]
+source_file="res://Sprites/burn_blast.png"
+dest_files=[ "res://.import/burn_blast.png-35c34739b84e65174c4c4b4292bfb1c7.stex" ]
 
 [params]
 
