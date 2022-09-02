@@ -5,18 +5,26 @@ extends KinematicBody2D
 # var a = 2
 # var b = "text"
 
+#Onready variables
 onready var attack_player = $Attack/AnimationPlayer
 onready var attack_body = $Attack
 onready var spec1_player = $EruptArc/AnimationPlayer
 onready var spec1_area = $EruptArc
 onready var spec2_player = $HeatWave/AnimationPlayer
 onready var spec2_area = $HeatWave
+onready var spec1_cd = $CooldownTimer1
+onready var spec2_cd = $CooldownTimer2
 onready var game_ui = get_node("/root/Main/Camera2D/InGameUI")
 onready var camera = get_node("../Camera2D")
 onready var world = get_node("/root/Main")
 onready var spawner_array = get_tree().get_nodes_in_group("Spawners")
+
+#Signals
 signal player_hp_change(new_hp)
 signal player_death
+signal special1_used
+
+#Variables
 var velocity = Vector2.ZERO
 var speed = 250
 var friction = 0.5
@@ -73,6 +81,8 @@ func spec1_attack():
 	spec1_area.look_at(mouse_pos)
 	spec1_area.rotate(-PI/2)
 	spec1_player.play("attack")
+	emit_signal("special1_used")
+	spec1_cd.start(8)
 	
 #When player damaged by enemy
 func _on_Enemy_enemy_damage_player(damage, source):
@@ -117,7 +127,7 @@ func _physics_process(delta):
 			velocity = lerp(velocity, Vector2.ZERO, friction)
 		if Input.is_action_just_pressed("prim_attack") and !attack_player.is_playing():
 			prim_attack()
-		elif Input.is_action_just_pressed("spec_attack_1") and !spec1_player.is_playing():
+		elif Input.is_action_just_pressed("spec_attack_1") and spec1_cd.is_stopped():
 			spec1_attack()
 	elif being_knocked_back and !dead:
 		velocity = lerp(knockback_vector * kb_force, Vector2.ZERO, friction)

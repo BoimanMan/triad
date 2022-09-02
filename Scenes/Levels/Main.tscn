@@ -275,6 +275,7 @@ wait_time = 60.0
 autostart = true
 
 [connection signal="player_death" from="Player" to="Camera2D" method="_on_Player_player_death"]
+[connection signal="special1_used" from="Player" to="Camera2D/InGameUI" method="_on_Player_special1_used"]
 [connection signal="timeout" from="EnemyTimer" to="EnemySpawner" method="_on_Timer_timeout"]
 [connection signal="timeout" from="EnemyTimer" to="EnemySpawner2" method="_on_Timer_timeout"]
 [connection signal="timeout" from="EnemyTimer" to="EnemySpawner3" method="_on_Timer_timeout"]
