@@ -34,6 +34,7 @@ var knockback_vector
 var dir
 var hp
 var atk_dam
+var base_dmg = 10
 var kb_force = 500
 var being_knocked_back = false
 var death_effect_scene = preload("res://Scenes/Systems/DeathEffect.tscn")
@@ -53,20 +54,30 @@ func _ready():
 	#pass
 
 #Calculate damage
-func calc_dmg():
-	pass
+func calc_dmg(attack):
+	var dmg_multiplier
+	match attack:
+		"prim":
+			dmg_multiplier = 1
+		"spec1":
+			dmg_multiplier = 1.25
+		"spec2":
+			dmg_multiplier = 2.5
+	var damage_prob = randi() % 101
+	var base_dmg_multiplied = base_dmg * dmg_multiplier
+	if damage_prob > 0 and damage_prob < 21:
+		atk_dam = int(rand_range(base_dmg_multiplied * 0.9, base_dmg_multiplied))
+	elif damage_prob > 20 and damage_prob < 81:
+		atk_dam = int(base_dmg_multiplied)
+	else:
+		atk_dam = int(rand_range(base_dmg_multiplied, base_dmg_multiplied * 1.1 + 1))
+	
 #Attack function
 func prim_attack():
 	#Set the frame to zero on start to avoid conflicts
 	#attack_player.set_frame(0)
 	#Play the animation from frame 0.
-	var damage_prob = randi() % 101
-	if damage_prob > 0 and damage_prob < 21:
-		atk_dam = 9
-	elif damage_prob > 20 and damage_prob < 81:
-		atk_dam = 10
-	else:
-		atk_dam = 11
+	calc_dmg("prim")
 	mouse_pos = get_global_mouse_position()
 	attack_body.look_at(mouse_pos)
 	attack_body.rotate(-PI/2)
@@ -74,13 +85,7 @@ func prim_attack():
 	
 #Special 1
 func spec1_attack():
-	var damage_prob = randi() % 101
-	if damage_prob > 0 and damage_prob < 21:
-		atk_dam = int(rand_range(27, 29))
-	elif damage_prob > 20 and damage_prob < 81:
-		atk_dam = int(rand_range(30, 32))
-	else:
-		atk_dam = int(rand_range(33, 35))
+	calc_dmg("spec1")
 	mouse_pos = get_global_mouse_position()
 	spec1_area.look_at(mouse_pos)
 	spec1_area.rotate(-PI/2)
@@ -90,13 +95,7 @@ func spec1_attack():
 	
 #Special 2
 func spec2_attack():
-	var damage_prob = randi() % 101
-	if damage_prob > 0 and damage_prob < 21:
-		atk_dam = int(rand_range(27, 29))
-	elif damage_prob > 20 and damage_prob < 81:
-		atk_dam = int(rand_range(30, 32))
-	else:
-		atk_dam = int(rand_range(33, 35))
+	calc_dmg("spec2")
 	mouse_pos = get_global_mouse_position()
 	spec2_area.look_at(mouse_pos)
 	spec2_area.rotate(-PI/2)
