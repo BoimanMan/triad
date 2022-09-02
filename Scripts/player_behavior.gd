@@ -7,6 +7,10 @@ extends KinematicBody2D
 
 onready var attack_player = $Attack/AnimationPlayer
 onready var attack_body = $Attack
+onready var spec1_player = $EruptArc/AnimationPlayer
+onready var spec1_area = $EruptArc
+onready var spec2_player = $HeatWave/AnimationPlayer
+onready var spec2_area = $HeatWave
 onready var game_ui = get_node("/root/Main/Camera2D/InGameUI")
 onready var camera = get_node("../Camera2D")
 onready var world = get_node("/root/Main")
@@ -56,6 +60,21 @@ func prim_attack():
 	attack_body.rotate(-PI/2)
 	attack_player.play("attack")
 	
+#Special 1
+func spec1_attack():
+	var damage_prob = randi() % 101
+	if damage_prob > 0 and damage_prob < 21:
+		atk_dam = int(rand_range(27, 29))
+	elif damage_prob > 20 and damage_prob < 81:
+		atk_dam = int(rand_range(30, 32))
+	else:
+		atk_dam = int(rand_range(33, 35))
+	mouse_pos = get_global_mouse_position()
+	spec1_area.look_at(mouse_pos)
+	spec1_area.rotate(-PI/2)
+	spec1_player.play("attack")
+	
+#When player damaged by enemy
 func _on_Enemy_enemy_damage_player(damage, source):
 	if being_knocked_back:
 		pass
@@ -98,6 +117,8 @@ func _physics_process(delta):
 			velocity = lerp(velocity, Vector2.ZERO, friction)
 		if Input.is_action_just_pressed("prim_attack") and !attack_player.is_playing():
 			prim_attack()
+		elif Input.is_action_just_pressed("spec_attack_1") and !spec1_player.is_playing():
+			spec1_attack()
 	elif being_knocked_back and !dead:
 		velocity = lerp(knockback_vector * kb_force, Vector2.ZERO, friction)
 	else:

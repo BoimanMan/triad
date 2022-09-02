@@ -73,7 +73,22 @@ func _on_Hurtbox_body_entered(body):
 		if hp <= 0:
 			emit_signal("enemy_kill")
 			queue_free()
-		
+
+func _on_Hurtbox_area_entered(area):
+	if area.is_in_group("Attack"):
+		hp -= player.atk_dam
+		emit_signal("enemy_hit", player.atk_dam)
+		if hp > 0:
+			velocity = Vector2.ZERO
+			$KnockbackTimer.start(0.5)
+			$FlashTimer.start(0.15)
+			$Hurtbox/CollisionShape2D.set_deferred("disabled", true)
+			$CollisionShape2D.set_deferred("disabled", true)
+			being_knocked_back = true
+			knockback_vector = (self.position - player.position).normalized()
+		if hp <= 0:
+			emit_signal("enemy_kill")
+			queue_free()
 func _on_Hitbox_body_entered(body):
 	#var base_damage = damage
 	if body.is_in_group("Players") and !being_knocked_back:
