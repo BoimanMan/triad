@@ -15,11 +15,15 @@ var minutes = 0
 var player_alive = true
 var game_start_time
 onready var cd1 = get_node("/root/Main/Player/CooldownTimer1")
+onready var cd2 = get_node("/root/Main/Player/CooldownTimer2")
 onready var hp_bar = $MarginContainer/VBoxContainer/BottomUI/VBoxContainer/HPBar
 onready var hp_bar_text = $MarginContainer/VBoxContainer/BottomUI/VBoxContainer/HPBar/Label
 onready var timer = $MarginContainer/VBoxContainer/TopUI/VBoxContainer/TextureRect/TimeDisplay
 onready var difficulty_display = $MarginContainer/VBoxContainer/TopUI/VBoxContainer/TextureRect/DiffDisplay
-onready var cd1_display = $MarginContainer/VBoxContainer/BottomUI/HBoxContainer/EruptArc
+onready var cd1_display = $MarginContainer/VBoxContainer/BottomUI/HBoxContainer/HeatWave
+onready var cd1_text = $MarginContainer/VBoxContainer/BottomUI/HBoxContainer/HeatWave/CooldownTime1
+onready var cd2_display = $MarginContainer/VBoxContainer/BottomUI/HBoxContainer/EruptArc
+onready var cd2_text = $MarginContainer/VBoxContainer/BottomUI/HBoxContainer/EruptArc/CooldownTime2
 onready var max_health = 100.0
 
 # Called when the node enters the scene tree for the first time.
@@ -54,12 +58,21 @@ func _physics_process(delta):
 			timer.text = (str(minutes) + ":" + str(seconds % 60))
 
 #Cooldowns
-	if !cd1.is_stopped():
-		$MarginContainer/VBoxContainer/BottomUI/HBoxContainer/EruptArc/CooldownTime.set_text(str(int(cd1.get_time_left() + 1)) + "s")
+	if player_alive:
+		if !cd1.is_stopped():
+			cd1_text.set_text(str(int(cd1.get_time_left() + 1)) + "s")
+		else:
+			cd1_text.set_text("")
+			cd1_display.set_modulate(Color.white)
+		if !cd2.is_stopped():
+			cd2_text.set_text(str(int(cd2.get_time_left() + 1)) + "s")
+		else:
+			cd2_text.set_text("")
+			cd2_display.set_modulate(Color.white)
 	else:
-		$MarginContainer/VBoxContainer/BottomUI/HBoxContainer/EruptArc/CooldownTime.set_text("")
-		cd1_display.set_modulate(Color.white)
-	
+		cd2_text.set_text("")
+		cd2_display.set_modulate(Color.white)
+
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 #func _process(delta):
 #	pass
@@ -71,6 +84,8 @@ func _on_Main_difficulty_changed(difficulty):
 func _on_Player_player_death():
 	player_alive = false
 
-
 func _on_Player_special1_used():
 	cd1_display.set_modulate(Color.darkgray)
+	
+func _on_Player_special2_used():
+	cd2_display.set_modulate(Color.darkgray)

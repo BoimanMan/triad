@@ -430,6 +430,8 @@ wait_time = 8.0
 one_shot = true
 
 [node name="CooldownTimer2" type="Timer" parent="."]
+wait_time = 8.0
+one_shot = true
 
 [connection signal="timeout" from="KnockbackTimer" to="." method="_on_KnockbackTimer_timeout"]
 [connection signal="timeout" from="FlashTimer" to="." method="_on_FlashTimer_timeout"]

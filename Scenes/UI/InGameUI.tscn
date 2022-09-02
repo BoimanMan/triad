@@ -192,6 +192,19 @@ texture = ExtResource( 6 )
 texture = ExtResource( 8 )
 centered = false
 
+[node name="CooldownTime1" type="Label" parent="MarginContainer/VBoxContainer/BottomUI/HBoxContainer/HeatWave"]
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = -18.0
+margin_top = -17.0
+margin_right = 22.0
+margin_bottom = 15.0
+custom_fonts/font = SubResource( 2 )
+align = 1
+valign = 1
+
 [node name="PhoenixRiot" type="TextureRect" parent="MarginContainer/VBoxContainer/BottomUI/HBoxContainer"]
 margin_left = 206.0
 margin_right = 270.0
@@ -212,7 +225,7 @@ texture = ExtResource( 6 )
 texture = ExtResource( 9 )
 centered = false
 
-[node name="CooldownTime" type="Label" parent="MarginContainer/VBoxContainer/BottomUI/HBoxContainer/EruptArc"]
+[node name="CooldownTime2" type="Label" parent="MarginContainer/VBoxContainer/BottomUI/HBoxContainer/EruptArc"]
 anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5

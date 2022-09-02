@@ -8,10 +8,10 @@ extends KinematicBody2D
 #Onready variables
 onready var attack_player = $Attack/AnimationPlayer
 onready var attack_body = $Attack
-onready var spec1_player = $EruptArc/AnimationPlayer
-onready var spec1_area = $EruptArc
-onready var spec2_player = $HeatWave/AnimationPlayer
-onready var spec2_area = $HeatWave
+onready var spec1_player = $HeatWave/AnimationPlayer
+onready var spec1_area = $HeatWave
+onready var spec2_player = $EruptArc/AnimationPlayer
+onready var spec2_area = $EruptArc
 onready var spec1_cd = $CooldownTimer1
 onready var spec2_cd = $CooldownTimer2
 onready var game_ui = get_node("/root/Main/Camera2D/InGameUI")
@@ -23,6 +23,7 @@ onready var spawner_array = get_tree().get_nodes_in_group("Spawners")
 signal player_hp_change(new_hp)
 signal player_death
 signal special1_used
+signal special2_used
 
 #Variables
 var velocity = Vector2.ZERO
@@ -51,6 +52,9 @@ func _ready():
 #func _process(delta):
 	#pass
 
+#Calculate damage
+func calc_dmg():
+	pass
 #Attack function
 func prim_attack():
 	#Set the frame to zero on start to avoid conflicts
@@ -82,7 +86,23 @@ func spec1_attack():
 	spec1_area.rotate(-PI/2)
 	spec1_player.play("attack")
 	emit_signal("special1_used")
-	spec1_cd.start(8)
+	spec1_cd.start(5)
+	
+#Special 2
+func spec2_attack():
+	var damage_prob = randi() % 101
+	if damage_prob > 0 and damage_prob < 21:
+		atk_dam = int(rand_range(27, 29))
+	elif damage_prob > 20 and damage_prob < 81:
+		atk_dam = int(rand_range(30, 32))
+	else:
+		atk_dam = int(rand_range(33, 35))
+	mouse_pos = get_global_mouse_position()
+	spec2_area.look_at(mouse_pos)
+	spec2_area.rotate(-PI/2)
+	spec2_player.play("attack")
+	emit_signal("special2_used")
+	spec2_cd.start(8)
 	
 #When player damaged by enemy
 func _on_Enemy_enemy_damage_player(damage, source):
@@ -114,39 +134,53 @@ func _on_EnemySpawner_enemy_spawned(enemy_instance):
 	self.connect("player_death", enemy_instance, "_on_Player_player_death")
 	
 func _physics_process(delta):
+	
+#If not knocked_back or dead, can move and physics take effect
 	if !being_knocked_back and !dead:
+		
 	#Get movement
 		var input_vector = Vector2.ZERO
 		input_vector.x = Input.get_action_strength("move_right") - Input.get_action_strength("move_left")
 		input_vector.y = Input.get_action_strength("move_down") - Input.get_action_strength("move_up")
 		input_vector = input_vector.normalized()
+		
 	#Move KinematicBody2D based on input
 		if input_vector != Vector2.ZERO:
 			velocity = lerp(Vector2.ZERO, input_vector * speed, 1)
 		else:
 			velocity = lerp(velocity, Vector2.ZERO, friction)
+			
+	#If primary attack button pressed and attack isn't already happening, attack start
 		if Input.is_action_just_pressed("prim_attack") and !attack_player.is_playing():
 			prim_attack()
+			
+	#Same goes for specials, except it's based on a cooldown timer
 		elif Input.is_action_just_pressed("spec_attack_1") and spec1_cd.is_stopped():
 			spec1_attack()
+		elif Input.is_action_just_pressed("spec_attack_2") and spec2_cd.is_stopped():
+			spec2_attack()
+			
+#If being knocked back but not dead, move away from damage source
 	elif being_knocked_back and !dead:
 		velocity = lerp(knockback_vector * kb_force, Vector2.ZERO, friction)
+#If dead, freeze
 	else:
 		velocity = Vector2.ZERO
 	#velocity = input_vector * speed
 	move_and_slide(velocity)
-	#If left mouse click, start attack animation.
 		
 	
 	
 
-#Timer functions
+#Timeout functions
+
 #On knockback duration end, stop sprite flash
 func _on_KnockbackTimer_timeout():
 	being_knocked_back = false 
 	$FlashTimer.stop()
 	$Sprite.show()
 	$CollisionShape2D.set_deferred("disabled", false)
+	
 #Create sprite blinking effect
 func _on_FlashTimer_timeout():
 	if $Sprite.is_visible():
