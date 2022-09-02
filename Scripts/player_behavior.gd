@@ -39,6 +39,7 @@ var kb_force = 500
 var being_knocked_back = false
 var death_effect_scene = preload("res://Scenes/Systems/DeathEffect.tscn")
 var player_death_sprite = preload("res://Sprites/sLeaderDeath.png")
+var heatwave_scene = preload("res://Scenes/Attacks/HeatWave.tscn")
 var dead = false
 
 # Called when the node enters the scene tree for the first time.
@@ -83,17 +84,24 @@ func prim_attack():
 	attack_body.rotate(-PI/2)
 	attack_player.play("attack")
 	
-#Special 1
+#Special 1 -> Heat Wave
 func spec1_attack():
 	calc_dmg("spec1")
 	mouse_pos = get_global_mouse_position()
+	var local_mouse_pos = get_local_mouse_position()
 	spec1_area.look_at(mouse_pos)
 	spec1_area.rotate(-PI/2)
 	spec1_player.play("attack")
 	emit_signal("special1_used")
 	spec1_cd.start(5)
+	var proj_instance = heatwave_scene.instance()
+	proj_instance.position = spec1_area.get_node("Sprite").global_position + (22 * local_mouse_pos.normalized())
+	proj_instance.rotation = spec1_area.rotation + PI/2
+	proj_instance.rotate(-PI/2)
+	proj_instance.dir = local_mouse_pos.normalized()
+	world.add_child(proj_instance)
 	
-#Special 2
+#Special 2 -> Erupt Arc
 func spec2_attack():
 	calc_dmg("spec2")
 	mouse_pos = get_global_mouse_position()
