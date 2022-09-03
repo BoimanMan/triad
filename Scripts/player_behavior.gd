@@ -33,7 +33,9 @@ var mouse_pos
 var knockback_vector
 var dir
 var hp
+var current_atk
 var atk_dam
+var burn_dam = 2
 var base_dmg = 10
 var kb_force = 500
 var being_knocked_back = false
@@ -78,7 +80,8 @@ func prim_attack():
 	#Set the frame to zero on start to avoid conflicts
 	#attack_player.set_frame(0)
 	#Play the animation from frame 0.
-	calc_dmg("prim")
+	current_atk = "prim"
+	calc_dmg(current_atk)
 	mouse_pos = get_global_mouse_position()
 	attack_body.look_at(mouse_pos)
 	attack_body.rotate(-PI/2)
@@ -86,7 +89,8 @@ func prim_attack():
 	
 #Special 1 -> Heat Wave
 func spec1_attack():
-	calc_dmg("spec1")
+	current_atk = "spec1"
+	calc_dmg(current_atk)
 	mouse_pos = get_global_mouse_position()
 	var local_mouse_pos = get_local_mouse_position()
 	spec1_area.look_at(mouse_pos)
@@ -99,11 +103,14 @@ func spec1_attack():
 	proj_instance.rotation = spec1_area.rotation + PI/2
 	proj_instance.rotate(-PI/2)
 	proj_instance.dir = local_mouse_pos.normalized()
+	proj_instance.get_node("Hitbox").add_to_group("Attack")
+	proj_instance.get_node("Hitbox").add_to_group("Burn")
 	world.add_child(proj_instance)
 	
 #Special 2 -> Erupt Arc
 func spec2_attack():
-	calc_dmg("spec2")
+	current_atk = "spec2"
+	calc_dmg(current_atk)
 	mouse_pos = get_global_mouse_position()
 	spec2_area.look_at(mouse_pos)
 	spec2_area.rotate(-PI/2)

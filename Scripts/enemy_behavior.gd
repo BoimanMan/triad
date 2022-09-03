@@ -8,9 +8,13 @@ var max_hp
 var player_alive = true
 var being_knocked_back = false
 var knockback_vector
+var burn_ticks = 0
+var wave_hit = false
 const KB_FORCE = 500
 onready var player = get_node("/root/Main/Player")
 onready var world = get_node("/root/Main")
+onready var sprite = self.get_node("Sprite")
+onready var heat_wave = preload("res://Scenes/Attacks/HeatWave.tscn")
 signal enemy_kill
 signal enemy_hit(damage)
 signal enemy_damage_player(damage)
@@ -55,6 +59,13 @@ func _physics_process(delta):
 		velocity = Vector2.ZERO
 	move_and_slide(velocity)
 
+func burn_damage():
+	hp -= player.burn_dam
+	emit_signal("enemy_hit", player.burn_dam)
+	if hp <= 0:
+		emit_signal("enemy_kill")
+		queue_free()
+			
 func _on_Player_player_death():
 	player_alive = false
 
@@ -75,6 +86,8 @@ func _on_Hurtbox_body_entered(body):
 			queue_free()
 
 func _on_Hurtbox_area_entered(area):
+	if player.current_atk != "spec2" and !wave_hit:
+		pass
 	if area.is_in_group("Attack"):
 		hp -= player.atk_dam
 		emit_signal("enemy_hit", player.atk_dam)
@@ -89,6 +102,12 @@ func _on_Hurtbox_area_entered(area):
 		if hp <= 0:
 			emit_signal("enemy_kill")
 			queue_free()
+	if area.is_in_group("Burn"):
+		sprite.set_modulate(Color.red)
+		$BurnTimer.start(1)
+		burn_ticks = 0
+	if area.get_parent() is heat_wave:
+		wave_hit = true
 func _on_Hitbox_body_entered(body):
 	#var base_damage = damage
 	if body.is_in_group("Players") and !being_knocked_back:
@@ -114,3 +133,16 @@ func _on_FlashTimer_timeout():
 		$Sprite.hide()
 	else:
 		$Sprite.show()
+
+
+func _on_BurnTimer_timeout():
+	burn_ticks += 1
+	if burn_ticks >= 5:
+		$BurnTimer.stop()
+		sprite.modulate(Color.white)
+	else:
+		burn_damage()
+
+
+func _on_HeatWaveCD_timeout():
+	wave_hit = false

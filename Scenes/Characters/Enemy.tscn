@@ -45,8 +45,16 @@ one_shot = true
 
 [node name="FlashTimer" type="Timer" parent="."]
 
+[node name="BurnTimer" type="Timer" parent="."]
+
+[node name="HeatWaveCD" type="Timer" parent="."]
+wait_time = 2.0
+one_shot = true
+
 [connection signal="area_entered" from="Hurtbox" to="." method="_on_Hurtbox_area_entered"]
 [connection signal="body_entered" from="Hurtbox" to="." method="_on_Hurtbox_body_entered"]
 [connection signal="body_entered" from="Hitbox" to="." method="_on_Hitbox_body_entered"]
 [connection signal="timeout" from="KnockbackTimer" to="." method="_on_KnockbackTimer_timeout"]
 [connection signal="timeout" from="FlashTimer" to="." method="_on_FlashTimer_timeout"]
+[connection signal="timeout" from="BurnTimer" to="." method="_on_BurnTimer_timeout"]
+[connection signal="timeout" from="HeatWaveCD" to="." method="_on_HeatWaveCD_timeout"]
