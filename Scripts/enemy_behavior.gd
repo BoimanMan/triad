@@ -9,8 +9,8 @@ var player_alive = true
 var being_knocked_back = false
 var knockback_vector
 var burn_ticks = 0
-var wave_hit = false
-const KB_FORCE = 500
+var last_hit
+const KB_FORCE = 250
 onready var player = get_node("/root/Main/Player")
 onready var world = get_node("/root/Main")
 onready var sprite = self.get_node("Sprite")
@@ -86,10 +86,9 @@ func _on_Hurtbox_body_entered(body):
 			queue_free()
 
 func _on_Hurtbox_area_entered(area):
-	if player.current_atk != "spec2" and !wave_hit:
-		pass
-	if area.is_in_group("Attack"):
+	if area.is_in_group("Attack") and player.current_atk != last_hit:
 		hp -= player.atk_dam
+		last_hit = player.current_atk
 		emit_signal("enemy_hit", player.atk_dam)
 		if hp > 0:
 			velocity = Vector2.ZERO
@@ -106,8 +105,6 @@ func _on_Hurtbox_area_entered(area):
 		sprite.set_modulate(Color.red)
 		$BurnTimer.start(1)
 		burn_ticks = 0
-	if area.get_parent() is heat_wave:
-		wave_hit = true
 func _on_Hitbox_body_entered(body):
 	#var base_damage = damage
 	if body.is_in_group("Players") and !being_knocked_back:
@@ -145,4 +142,4 @@ func _on_BurnTimer_timeout():
 
 
 func _on_HeatWaveCD_timeout():
-	wave_hit = false
+	pass

@@ -231,3 +231,7 @@ func _on_DeathAnimTimer_timeout():
 	print("Game Over.")
 	get_parent().get_node("DifficultyTimer").stop()
 	queue_free()
+
+
+func _on_AnimationPlayer_animation_finished(anim_name):
+	current_atk = "none"

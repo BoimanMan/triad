@@ -436,3 +436,6 @@ one_shot = true
 [connection signal="timeout" from="KnockbackTimer" to="." method="_on_KnockbackTimer_timeout"]
 [connection signal="timeout" from="FlashTimer" to="." method="_on_FlashTimer_timeout"]
 [connection signal="timeout" from="DeathAnimTimer" to="." method="_on_DeathAnimTimer_timeout"]
+[connection signal="animation_finished" from="Attack/AnimationPlayer" to="." method="_on_AnimationPlayer_animation_finished"]
+[connection signal="animation_finished" from="EruptArc/AnimationPlayer" to="." method="_on_AnimationPlayer_animation_finished"]
+[connection signal="animation_finished" from="HeatWave/AnimationPlayer" to="." method="_on_AnimationPlayer_animation_finished"]
