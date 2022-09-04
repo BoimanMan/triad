@@ -133,3 +133,18 @@ func _on_WaveTimer_timeout():
 #Signal: When DifficultyTimer times out, increase difficulty.
 func _on_DifficultyTimer_timeout():
 	difficulty_change()
+	
+func _on_Player_player_deathanim_end():
+	$GameOverTimer.start(5)
+
+
+func _on_GameOverTimer_timeout():
+	$Camera2D/GOCanvas/GameOver/MarginContainer/PopupPanel.popup()
+
+
+func _on_GameOver_restart_game():
+	get_tree().reload_current_scene()
+
+
+func _on_GameOver_exit_to_main_menu():
+	get_tree().change_scene("res://Scenes/UI/MainMenu.tscn")

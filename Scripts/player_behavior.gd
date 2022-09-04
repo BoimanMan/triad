@@ -22,6 +22,7 @@ onready var spawner_array = get_tree().get_nodes_in_group("Spawners")
 #Signals
 signal player_hp_change(new_hp)
 signal player_death
+signal player_deathanim_end
 signal special1_used
 signal special2_used
 
@@ -48,6 +49,7 @@ var dead = false
 func _ready():
 	self.connect("player_hp_change", game_ui, "_on_Player_player_hp_change")
 	self.connect("player_death", game_ui, "_on_Player_player_death")
+	self.connect("player_deathanim_end", world, "_on_Player_player_deathanim_end")
 	for n in spawner_array:
 		self.connect("player_death", n, "_on_Player_player_death")
 	hp = 100
@@ -230,6 +232,7 @@ func _on_DeathAnimTimer_timeout():
 		world.add_child(death_effect)
 	print("Game Over.")
 	get_parent().get_node("DifficultyTimer").stop()
+	emit_signal("player_deathanim_end")
 	queue_free()
 
 
